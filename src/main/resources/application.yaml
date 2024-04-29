@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: signing-up-for-a-car-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/carservicedb
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
