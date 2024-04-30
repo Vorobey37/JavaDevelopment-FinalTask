@@ -53,6 +53,51 @@ public class RegistrationService extends AService<Registration, RegistrationRepo
         return repository.save(requestObject);
     }
 
+    public List<Registration> findAllByMaster(long masterId){
+        Master master = masterRepository.findById(masterId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Мастер не найден по id: " + masterId));
+
+        return repository.findRegistrationByMaster(master);
+    }
+
+    public List<Registration> findAllByClient(long clientId){
+        CarServiceClient client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Клиент не найден по id: " + clientId));
+
+        return repository.findRegistrationByCarServiceClient(client);
+    }
+
+    public List<Registration> findAllByCar(long carId){
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Мастер не найден по id: " + carId));
+
+        return repository.findRegistrationByCar(car);
+    }
+
+    public List<Registration> findActualByMaster(long masterId){
+        List<Registration> registrations = findAllByMaster(masterId);
+
+        return registrations.stream()
+                .filter(reg -> reg.getTimeFrom().isAfter(LocalDateTime.now()))
+                .toList();
+    }
+
+    public List<Registration> findActualByCar(long carId){
+        List<Registration> registrations = findAllByCar(carId);
+
+        return registrations.stream()
+                .filter(reg -> reg.getTimeFrom().isAfter(LocalDateTime.now()))
+                .toList();
+    }
+
+    public List<Registration> findActualByClient(long clientId){
+        List<Registration> registrations = findAllByClient(clientId);
+
+        return registrations.stream()
+                .filter(reg -> reg.getTimeFrom().isAfter(LocalDateTime.now()))
+                .toList();
+    }
+
     private void checkRegistrationValues(Registration requestObject){
         checkClientValue(requestObject.getCarServiceClient());
         checkCarValue(requestObject.getCar());
