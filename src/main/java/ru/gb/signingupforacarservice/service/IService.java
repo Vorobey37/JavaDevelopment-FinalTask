@@ -2,7 +2,7 @@ package ru.gb.signingupforacarservice.service;
 
 import java.util.List;
 
-public interface iService<T> {
+public interface IService<T> {
 
     List<T> findAll();
     T findById(long id);

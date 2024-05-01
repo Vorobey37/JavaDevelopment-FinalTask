@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RequiredArgsConstructor
-public abstract class AService<T extends ServiceModel, E extends JpaRepository<T, Long>> implements iService<T> {
+public abstract class AService<T extends ServiceModel, E extends JpaRepository<T, Long>> implements IService<T> {
 
     protected static final String NOT_FOUND_MESSAGE = "Объект не найден с id: ";
     protected static final String BAD_REQUEST_MESSAGE = "Передаваемый объект не может быть null";
@@ -54,6 +54,20 @@ public abstract class AService<T extends ServiceModel, E extends JpaRepository<T
     public T update(long id, T requestObject){
         checkExistsIdEntityInDB(id);
         checkRequest(requestObject);
+
+        if(checkExistsEntityInDB(requestObject)){
+            List<T> objects = findByCustomFields(requestObject);
+
+            int count = 0;
+            for (T element : objects) {
+                if (element.getId() == id){
+                    count++;
+                }
+            }
+            if (count == 0){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Объект не уникален!");
+            }
+        }
         requestObject.setId(id);
 
         return repository.save(requestObject);
@@ -81,5 +95,9 @@ public abstract class AService<T extends ServiceModel, E extends JpaRepository<T
 
     protected boolean checkExistsEntityInDB(T requestObject){
         return false;
+    }
+
+    protected List<T> findByCustomFields(T requestObject){
+        return null;
     }
 }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.gb.signingupforacarservice.model.RepairType;
 import ru.gb.signingupforacarservice.repository.RepairTypeRepository;
 
+import java.util.List;
+
 @Service
 public class RepairTypeService extends AService<RepairType, RepairTypeRepository>{
 
@@ -15,11 +17,15 @@ public class RepairTypeService extends AService<RepairType, RepairTypeRepository
 
     @Override
     protected boolean checkExistsEntityInDB(RepairType requestObject) {
-        return !repository.findRepairTypeByNameAndDurationTimeAndPrice(
+        return !findByCustomFields(requestObject).isEmpty();
+    }
+
+    @Override
+    protected List<RepairType> findByCustomFields(RepairType requestObject) {
+        return repository.findRepairTypeByNameAndDurationTimeAndPrice(
                 requestObject.getName(),
                 requestObject.getDurationTime(),
                 requestObject.getPrice()
-        ).isEmpty();
+        );
     }
-
 }

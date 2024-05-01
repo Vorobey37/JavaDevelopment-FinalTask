@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-public abstract class AController<T extends AService<E, ?>, E extends ServiceModel> implements iController<E>{
+public abstract class AController<T extends AService<E, ?>, E extends ServiceModel> implements IController<E> {
 
     protected final T service;
 

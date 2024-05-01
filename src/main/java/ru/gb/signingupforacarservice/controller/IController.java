@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.signingupforacarservice.model.ServiceModel;
 import java.util.List;
 
-public interface iController<T extends ServiceModel> {
+public interface IController<T extends ServiceModel> {
 
     @GetMapping("all")
     ResponseEntity<List<T>> getAll();
