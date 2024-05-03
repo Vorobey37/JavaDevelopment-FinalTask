@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Авторизованные пользователи
+ */
 @Entity
 @Data
 @Table(name="authorized_users")

@@ -7,6 +7,9 @@ import ru.gb.signingupforacarservice.repository.MasterRepository;
 
 import java.util.List;
 
+/**
+ * Сервис для взаимодействия с мастерами
+ */
 @Service
 public class MasterService extends AService<Master, MasterRepository>{
 
@@ -15,11 +18,21 @@ public class MasterService extends AService<Master, MasterRepository>{
         super(repository);
     }
 
+    /**
+     * Проверка существования мастера в БД
+     * @param requestObject Передаваемый мастер для проверки
+     * @return Логический результат проверки
+     */
     @Override
     protected boolean checkExistsEntityInDB(Master requestObject) {
         return !findByCustomFields(requestObject).isEmpty();
     }
 
+    /**
+     * Поиск мастера по ФИО и должности по VIN в БД
+     * @param requestObject Передаваемый мастер для поиска
+     * @return Список найденных мастеров
+     */
     @Override
     protected List<Master> findByCustomFields(Master requestObject) {
         return repository.findMasterByLastNameAndFistNameAndMiddleNameAndSpecialization(

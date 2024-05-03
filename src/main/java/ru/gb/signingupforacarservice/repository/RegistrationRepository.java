@@ -9,6 +9,9 @@ import ru.gb.signingupforacarservice.model.Registration;
 
 import java.util.List;
 
+/**
+ * Интерфейс для взаимодействия с записями на сервис, занесенными в БД
+ */
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
     List<Registration> findRegistrationByMaster(Master master);

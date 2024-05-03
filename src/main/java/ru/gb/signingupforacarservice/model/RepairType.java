@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Работы, выполняемые в автосервисе
+ */
 @Data
 @Entity
 @Table(name="repair_types")

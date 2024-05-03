@@ -6,6 +6,9 @@ import ru.gb.signingupforacarservice.model.RepairType;
 
 import java.util.List;
 
+/**
+ * Интерфейс для взаимодействия с ремонтными работами, занесенными в БД
+ */
 @Repository
 public interface RepairTypeRepository extends JpaRepository<RepairType, Long> {
 

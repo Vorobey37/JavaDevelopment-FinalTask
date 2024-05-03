@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Мастера, выполняющие ремонты
+ */
 @Data
 @Entity
 @Table(name="masters")

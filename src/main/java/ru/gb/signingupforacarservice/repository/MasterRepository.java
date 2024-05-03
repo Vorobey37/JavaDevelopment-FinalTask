@@ -6,6 +6,9 @@ import ru.gb.signingupforacarservice.model.Master;
 
 import java.util.List;
 
+/**
+ * Интерфейс для взаимодействия с мастерами, занесенными в БД
+ */
 @Repository
 public interface MasterRepository extends JpaRepository<Master, Long> {
     List<Master> findMasterByLastNameAndFistNameAndMiddleNameAndSpecialization(String lastName, String firstName, String middleName, String specialization);

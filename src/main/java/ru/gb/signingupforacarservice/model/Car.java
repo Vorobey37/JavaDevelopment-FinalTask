@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Автомобили
+ */
 @Data
 @Entity
 @Table(name="cars")

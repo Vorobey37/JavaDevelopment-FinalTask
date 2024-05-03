@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
+/**
+ * Записи в автосервис
+ */
 @Entity
 @Data
 @Table(name="repair_registration")
