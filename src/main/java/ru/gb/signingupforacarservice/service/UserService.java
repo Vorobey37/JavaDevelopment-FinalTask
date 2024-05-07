@@ -38,16 +38,6 @@ public class UserService extends AService<AuthorizedUser, UserRepository>{
     }
 
     /**
-     * Создание авторизованного пользователя
-     * @param requestObject Передаваемый пользователь для создания
-     * @return Созданный пользователь
-     */
-    @Override
-    public AuthorizedUser create(AuthorizedUser requestObject) {
-        return super.create(requestObject);
-    }
-
-    /**
      * Проверка существования пользователя в БД
      * @param requestObject Передаваемый объект-наследник класса ServiceModel для проверки
      * @return Логический результат проверки
@@ -82,9 +72,12 @@ public class UserService extends AService<AuthorizedUser, UserRepository>{
         if (users.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь отсутствует с login: " + login);
         }
+
         if (users.size() > 1){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Существует несколько пользователей с login: " + login + ", обратитесь в техподдержку");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Существует несколько пользователей с login: " + login + ", обратитесь в техподдержку");
         }
+
         return users.get(0);
     }
 }

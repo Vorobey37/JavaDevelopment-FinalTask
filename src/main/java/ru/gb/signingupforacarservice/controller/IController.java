@@ -34,6 +34,7 @@ public interface IController<T extends ServiceModel> {
     ResponseEntity<T> create(@RequestBody T requestObject);
 
     /**
+     * Редактирование объекта
      * @param id id объекта класса-наследника ServiceModel, который необходимо отредактировать
      * @param requestObject передаваемый, отредактированный объект класса-наследника ServiceModel в виде параметра RequestBody
      * @return объект класса-наследника ServiceModel в теле http-ответа

@@ -38,7 +38,10 @@ public class RegistrationService extends AService<Registration, RegistrationRepo
      */
     @Override
     public Registration create(Registration requestObject) {
-        LocalDateTime timeTo = requestObject.getTimeFrom().plusMinutes(requestObject.getRepairType().getDurationTime());
+        LocalDateTime timeTo = requestObject
+                .getTimeFrom()
+                .plusMinutes(requestObject.getRepairType().getDurationTime());
+
         requestObject.setTimeTo(timeTo);
 
         checkRegistrationValues(requestObject);
@@ -59,7 +62,10 @@ public class RegistrationService extends AService<Registration, RegistrationRepo
 
         requestObject.setId(id);
 
-        LocalDateTime timeTo = requestObject.getTimeFrom().plusMinutes(requestObject.getRepairType().getDurationTime());
+        LocalDateTime timeTo = requestObject
+                .getTimeFrom()
+                .plusMinutes(requestObject.getRepairType().getDurationTime());
+
         requestObject.setTimeTo(timeTo);
 
         checkRegistrationValues(requestObject);
@@ -74,7 +80,9 @@ public class RegistrationService extends AService<Registration, RegistrationRepo
      */
     public List<Registration> findAllByMaster(long masterId){
         Master master = masterRepository.findById(masterId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Мастер не найден по id: " + masterId));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Мастер не найден по id: " + masterId)
+                );
 
         return repository.findRegistrationByMaster(master);
     }
@@ -86,7 +94,9 @@ public class RegistrationService extends AService<Registration, RegistrationRepo
      */
     public List<Registration> findAllByClient(long clientId){
         CarServiceClient client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Клиент не найден по id: " + clientId));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Клиент не найден по id: " + clientId)
+                );
 
         return repository.findRegistrationByCarServiceClient(client);
     }
@@ -98,7 +108,9 @@ public class RegistrationService extends AService<Registration, RegistrationRepo
      */
     public List<Registration> findAllByCar(long carId){
         Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Мастер не найден по id: " + carId));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Мастер не найден по id: " + carId)
+                );
 
         return repository.findRegistrationByCar(car);
     }
@@ -228,13 +240,30 @@ public class RegistrationService extends AService<Registration, RegistrationRepo
         List<Registration> registrations = repository.findRegistrationByMaster(requestObject.getMaster());
 
         for (Registration element : registrations) {
-            boolean isTimesFromEquals = requestObject.getTimeFrom().equals(element.getTimeFrom());
-            boolean isTimesToEquals = requestObject.getTimeTo().equals(element.getTimeTo());
-            boolean isTimeFromExistsMasterTime = requestObject.getTimeFrom().isAfter(element.getTimeFrom()) && requestObject.getTimeFrom().isBefore(element.getTimeTo());
-            boolean isTimeToExistsMasterTime = requestObject.getTimeTo().isAfter(element.getTimeFrom()) && requestObject.getTimeTo().isBefore(element.getTimeTo());
-            boolean isMasterTimeExistsRequestTime = element.getTimeFrom().isAfter(requestObject.getTimeFrom()) && element.getTimeTo().isBefore(requestObject.getTimeTo());
+            boolean isTimesFromEquals =
+                    requestObject.getTimeFrom().equals(element.getTimeFrom());
 
-            if (isTimesFromEquals || isTimesToEquals || isTimeFromExistsMasterTime || isTimeToExistsMasterTime || isMasterTimeExistsRequestTime){
+            boolean isTimesToEquals =
+                    requestObject.getTimeTo().equals(element.getTimeTo());
+
+            boolean isTimeFromExistsMasterTime =
+                    requestObject.getTimeFrom().isAfter(element.getTimeFrom())
+                            && requestObject.getTimeFrom().isBefore(element.getTimeTo());
+
+            boolean isTimeToExistsMasterTime =
+                    requestObject.getTimeTo().isAfter(element.getTimeFrom())
+                            && requestObject.getTimeTo().isBefore(element.getTimeTo());
+
+            boolean isMasterTimeExistsRequestTime =
+                    element.getTimeFrom().isAfter(requestObject.getTimeFrom())
+                            && element.getTimeTo().isBefore(requestObject.getTimeTo());
+
+            if (isTimesFromEquals
+                    || isTimesToEquals
+                    || isTimeFromExistsMasterTime
+                    || isTimeToExistsMasterTime
+                    || isMasterTimeExistsRequestTime){
+
                 if (!Objects.equals(requestObject.getId(), element.getId())){
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Желаемый мастер занят в это время");
                 }

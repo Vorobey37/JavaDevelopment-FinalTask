@@ -5,7 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 /**
  * Настройка для защиты приложения
@@ -28,7 +31,8 @@ public class SecurityConfig {
                         .requestMatchers("/registration/all", "/registration/master/**").hasAuthority("CLIENT")
                         .requestMatchers("/registration/**", "/client/**", "/car/**", "/master/**", "/repair/**").hasAuthority("EMPLOYEE")
                         .anyRequest().hasAuthority("ADMIN")
-                )
+
+                ).csrf(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults());
 
         return http.build();

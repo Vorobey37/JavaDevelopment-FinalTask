@@ -12,7 +12,6 @@ import ru.gb.signingupforacarservice.service.CarService;
 @RestController
 @RequestMapping("car")
 public class CarController extends AController<CarService, Car>{
-
     @Autowired
     public CarController(CarService service) {
         super(service);

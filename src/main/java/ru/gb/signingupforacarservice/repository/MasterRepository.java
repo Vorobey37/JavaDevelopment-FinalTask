@@ -11,5 +11,10 @@ import java.util.List;
  */
 @Repository
 public interface MasterRepository extends JpaRepository<Master, Long> {
-    List<Master> findMasterByLastNameAndFistNameAndMiddleNameAndSpecialization(String lastName, String firstName, String middleName, String specialization);
+    List<Master> findMasterByLastNameAndFistNameAndMiddleNameAndSpecialization(
+            String lastName,
+            String firstName,
+            String middleName,
+            String specialization
+    );
 }

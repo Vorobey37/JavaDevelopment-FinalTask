@@ -12,5 +12,9 @@ import java.util.List;
 @Repository
 public interface RepairTypeRepository extends JpaRepository<RepairType, Long> {
 
-    List<RepairType> findRepairTypeByNameAndDurationTimeAndPrice(String name, float durationTime, double price);
+    List<RepairType> findRepairTypeByNameAndDurationTimeAndPrice(
+            String name,
+            float durationTime,
+            double price
+    );
 }
