@@ -237,6 +237,9 @@ class RegistrationControllerTest extends TestSpringBootBase{
                 .expectStatus().isBadRequest();
     }
 
+    /**
+     * Позитивное тестирование редактирования записи на сервис
+     */
     @Test
     void testUpdateSuccess(){
         Registration updateRegistration = new Registration();
@@ -268,6 +271,9 @@ class RegistrationControllerTest extends TestSpringBootBase{
 
     }
 
+    /**
+     * Редактирование записи с несуществующим id
+     */
     @Test
     void testUpdateNotFound(){
         Registration updateRegistration = new Registration();

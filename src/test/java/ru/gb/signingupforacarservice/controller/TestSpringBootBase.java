@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import ru.gb.signingupforacarservice.model.*;
@@ -34,6 +35,8 @@ public abstract class TestSpringBootBase {
     MasterRepository masterRepository;
     @Autowired
     RepairTypeRepository repairTypeRepository;
+    @Autowired
+    UserRepository userRepository;
 
     protected final CarServiceClient client1 = new CarServiceClient();
     protected final CarServiceClient client2 = new CarServiceClient();
@@ -49,6 +52,8 @@ public abstract class TestSpringBootBase {
     protected LocalDateTime timeTo2;
     protected final Registration registration1 = new Registration();
     protected final Registration registration2 = new Registration();
+    protected final AuthorizedUser user1 = new AuthorizedUser();
+    protected final AuthorizedUser user2 = new AuthorizedUser();
 
     @BeforeEach
     void setUp(){
@@ -106,17 +111,27 @@ public abstract class TestSpringBootBase {
         timeFrom2 = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).plusMinutes(50);
         timeTo2 = timeFrom1.plusMinutes(repairType1.getDurationTime());
 
+        user1.setLogin("user1");
+        user1.setPassword("password1");
+        user1.setRole("ADMIN");
+
+        user2.setLogin("user2");
+        user2.setPassword("password2");
+        user2.setRole("EMPLOYEE");
+
         clientRepository.save(client1);
         carRepository.save(car1);
         masterRepository.save(master1);
         repairTypeRepository.save(repairType1);
         registrationRepository.save(registration1);
+        userRepository.save(user1);
 
         clientRepository.save(client2);
         carRepository.save(car2);
         masterRepository.save(master2);
         repairTypeRepository.save(repairType2);
         registrationRepository.save(registration2);
+        userRepository.save(user2);
 
         registration1.setCarServiceClient(client1);
         registration1.setCar(car1);
